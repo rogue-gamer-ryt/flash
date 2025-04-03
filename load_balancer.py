@@ -13,11 +13,19 @@ class LoadBalancer:
             print(f"[LOAD BALANCER] Removing {server_id} from config...")
             self.all_servers[server_id].is_active = False
 
+    def _add_server(self, server_id):
+        if server_id in self.all_servers:
+            print(f"[LOAD BALANCER] Adding {server_id} back to config...")
+            self.all_servers[server_id].is_active = True
+
     def listen_for_failures(self):
-        subcriber = self.redis_client.pubsub()
-        subcriber.subscribe("server:down")
-        print("[LOAD BALANCER] Listening for failures...")
-        for message in subcriber.listen():
+        subscriber = self.redis_client.pubsub()
+        subscriber.subscribe("server:down", "server:recovery")
+        print("[LOAD BALANCER] Listening for server status changes...")
+        for message in subscriber.listen():
             if message["type"] == "message":
                 data = json.loads(message["data"])
-                self._remove_server(data["server_id"])
+                if message["channel"].decode() == "server:down":
+                    self._remove_server(data["server_id"])
+                elif message["channel"].decode() == "server:recovery":
+                    self._add_server(data["server_id"])
