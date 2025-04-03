@@ -12,7 +12,7 @@ class MonitoringService:
 
     def publish_failed_server(self, server_id):
         listeners = self.redis_client.publish("server:down", json.dumps({"server_id": server_id}))
-        print(f"[MONITORING] Recovered server published to {listeners} clients")
+        print(f"[MONITORING] Failed server published to {listeners} clients")
 
     def check_servers(self):
         while True:
