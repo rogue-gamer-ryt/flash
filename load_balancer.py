@@ -18,7 +18,7 @@ class LoadBalancer:
             print(f"[LOAD BALANCER] Adding {server_id} back to config...")
             self.all_servers[server_id].is_active = True
 
-    def listen_for_failures(self):
+    def listen_for_server_status_changes(self):
         subscriber = self.redis_client.pubsub()
         subscriber.subscribe("server:down", "server:recovery")
         print("[LOAD BALANCER] Listening for server status changes...")
