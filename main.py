@@ -9,8 +9,8 @@ import threading
 load_balancer = LoadBalancer()
 
 monitoring_service = MonitoringService()
-lb_fail_thread = threading.Thread(target=load_balancer.listen_for_failures,  daemon=True)
-monitor_thread = threading.Thread(target=monitoring_service.check_servers)
+lb_fail_thread = threading.Thread(target=load_balancer.listen_for_failures, daemon=True)
+monitor_thread = threading.Thread(target=monitoring_service.check_servers, daemon=True)
 
 # Start threads
 lb_fail_thread.start()
