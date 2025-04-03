@@ -11,7 +11,7 @@ class Server:
 
     def status(self):
         status = "healthy" if random() > 0.2 else "unhealthy"  # just to simulate health status
-        print(f"[HEARTBEAT] {self.server_id} - {status}")
+        print(f"[SERVER] | [HEARTBEAT] {self.server_id} - {status}")
         return {"server_id": self.server_id, "status": status}
 
 

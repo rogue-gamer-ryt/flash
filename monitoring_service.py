@@ -25,7 +25,7 @@ class MonitoringService:
                     else:
                         raise Exception("Unaccepted response")
                 except Exception:
-                    print(f"[MONITORING][ALERT] {server.server_id} is DOWN!")
+                    print(f"[MONITORING] | [ALERT] {server.server_id} is DOWN!")
                     self.publish_failed_server(server.server_id)
 
             time.sleep(2)  # Check every 2 seconds
