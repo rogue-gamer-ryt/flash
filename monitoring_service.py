@@ -2,12 +2,12 @@ import json
 import time
 
 from redis_util import redis_client
-from server import ACTIVE_SERVERS
+from server import ALL_SERVERS
 
 
 class MonitoringService:
-    def __init__(self, active_servers=None):
-        self.active_servers = active_servers if active_servers else ACTIVE_SERVERS
+    def __init__(self, all_servers=None):
+        self.all_servers = all_servers if all_servers else ALL_SERVERS
         self.redis_client = redis_client
 
     def publish_failed_server(self, server_id):
@@ -16,7 +16,7 @@ class MonitoringService:
 
     def check_servers(self):
         while True:
-            for _, server in self.active_servers.items():
+            for _, server in self.all_servers.items():
                 try:
                     server_status = server.status().get("status")
 

@@ -15,6 +15,6 @@ class Server:
         return {"server_id": self.server_id, "status": status}
 
 
-ACTIVE_SERVERS = {
+ALL_SERVERS = {
     f"server_{i}": Server(f"server_{i}") for i in range(1, 6)
 }
